@@ -1,0 +1,12 @@
+.search-input {
+  padding: 1rem;
+  margin: 1rem;
+  width: 300px;
+  border: 1px solid #000;
+  font-size: 1rem;
+  /* color: gray; */
+  /* background-image: url("http://i47.tinypic.com/r02vbq.png"); */
+  /* background-repeat: no-repeat;
+  background-position: left center; */
+  outline: 0;
+}
