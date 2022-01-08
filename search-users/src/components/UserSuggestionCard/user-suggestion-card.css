@@ -1,0 +1,21 @@
+.suggestion-card {
+  padding: 0.5rem;
+}
+
+.suggestion-card .user-id {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.suggestion-card .user-name {
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+.suggestion-card .user-address {
+  font-size: 14px;
+}
+
+.active-user {
+  background: #f8baf8;
+}
