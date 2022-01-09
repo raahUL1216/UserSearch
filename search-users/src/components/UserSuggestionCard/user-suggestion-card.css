@@ -1,19 +1,40 @@
 .suggestion-card {
   padding: 0.5rem;
+  cursor: pointer;
 }
 
 .suggestion-card .user-id {
-  font-size: 1.2rem;
+  font-size: 16px;
   font-weight: 500;
 }
 
 .suggestion-card .user-name {
-  font-size: 1.2rem;
+  font-size: 16px;
   font-style: italic;
 }
 
 .suggestion-card .user-address {
   font-size: 14px;
+}
+
+.item-search-container ul.item-search-text {
+  list-style-type: none;
+  font-size: 14px;
+  line-height: 18px;
+  border: 1px dashed #808080;
+  border-style: solid;
+  border-width: 1px 0 1px 0;
+  padding: 5px 1rem;
+  margin: 10px 0;
+}
+
+ul.item-search-text li::before {
+  content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  color: rgb(14, 105, 223);
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
 }
 
 .active-user {
