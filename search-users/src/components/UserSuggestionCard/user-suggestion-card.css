@@ -37,7 +37,9 @@ ul.item-search-text li::before {
 }
 
 .selected-suggestion {
-  background: #f8c79e;
+  color: rgb(37, 37, 37);
+  background: -webkit-linear-gradient(top, #fff0ca 100%, #fff 0);
+  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.25), 0 1px 5px rgba(0, 0, 0, 0.25);
 }
 
 .word-found {
