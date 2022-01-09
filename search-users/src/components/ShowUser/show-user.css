@@ -1,0 +1,18 @@
+.user-page-title,
+.user-container {
+  margin: 1rem;
+}
+
+.user-container {
+  list-style-type: none;
+  padding: 0;
+  font-size: 16px;
+}
+
+.user-container li {
+  padding: 10px;
+}
+
+.field-name {
+  font-weight: 500;
+}

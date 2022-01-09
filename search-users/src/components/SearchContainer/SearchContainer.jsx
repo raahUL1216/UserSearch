@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import SearchInput from '../SearchInput/SearchInput'
 import UserSuggestionCards from '../UserSuggestionCards/UserSuggestionCards'
 import { Constants } from '../../common/Constants'
 
 const SearchContainer = () => {
+	const history = useHistory();
+
 	// state for input search terma and user search suggestions
 	const [userSearch, setUserSearchDetails] = useState({
 		searchText: '',
@@ -98,19 +101,26 @@ const SearchContainer = () => {
 		return result;
 	}
 
-	const clearUserSuggestions = () => {
-		setUserSearchDetails({
-			...userSearch,
-			searchText: '',
-			searchSuggestions: []
-		})
+	const clearUserSuggestions = (event) => {
+		const keyPressed = (event?.keyCode ? event?.which : event?.key);
+
+		if (keyPressed === 13) { //Enter keycode
+			setUserSearchDetails({
+				...userSearch,
+				searchText: '',
+				searchSuggestions: []
+			})
+		}
 	}
 
 	const showUserPage = (event) => {
 		const keyPressed = (event.keyCode ? event.keyCode : event.which);
 
 		if (keyPressed === 13) { //Enter keycode
-			console.log('search users and redirect to show search results')
+			history.push({
+				pathname: '/searches',
+				state: userSearch.searchSuggestions
+			});
 		}
 	}
 
@@ -119,6 +129,7 @@ const SearchContainer = () => {
 			<SearchInput
 				searchText={userSearch.searchText}
 				searchUsers={searchUsers}
+				searchSuggestions={userSearch.searchSuggestions}
 				clearUserSuggestions={clearUserSuggestions}
 			/>
 			<UserSuggestionCards

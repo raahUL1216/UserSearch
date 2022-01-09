@@ -1,0 +1,18 @@
+.search-page-title,
+.user-suggestion-list {
+  margin: 1rem;
+}
+
+.user-suggestion-list {
+  list-style-type: none;
+  padding: 0;
+  font-size: 16px;
+}
+
+.user-suggestion-list li {
+  padding: 10px;
+}
+
+.field-name {
+  font-weight: 500;
+}

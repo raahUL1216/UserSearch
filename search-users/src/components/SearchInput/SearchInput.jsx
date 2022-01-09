@@ -1,9 +1,12 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import './search-input.css'
 import { FaSearch } from "react-icons/fa";
 import { AiOutlineClose } from 'react-icons/ai'
 
 const SearchInput = (props) => {
+	const history = useHistory();
+
 	const showUserSuggestions = (event, isKeyboardEvent) => {
 		if (isKeyboardEvent) {
 			const keyPressed = (event.keyCode ? event.keyCode : event.which);
@@ -21,7 +24,11 @@ const SearchInput = (props) => {
 
 		if (keyPressed === 13) { //Enter keycode
 			props.searchUsers(event, props.searchText);
-			console.log('redirect to show search results');
+
+			history.push({
+				pathname: '/searches',
+				state: props.searchSuggestions
+			});
 		}
 	}
 
@@ -40,7 +47,7 @@ const SearchInput = (props) => {
 						className='input-search'
 						placeholder="Search users by ID, address, name, items."
 						value={props.searchText}
-						onChange={(event) => { props.searchUsers(event, props.searchText) }}
+						onChange={(event) => { props.searchUsers(event, event.target.value) }}
 						onKeyDown={(event) => showSeachResultsPage(event)}
 						name="searchTerm"
 						autoFocus
