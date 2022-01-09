@@ -9,7 +9,6 @@ const ShowSearchResult = () => {
 
 	useEffect(() => {
 		setsearchSuggestions(location.state);
-		console.log(location.state);
 	}, [location]);
 
 	const getUserItems = (items) => {

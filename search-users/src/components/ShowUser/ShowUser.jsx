@@ -9,7 +9,6 @@ const ShowUser = () => {
 
 	useEffect(() => {
 		setUser(location.state);
-		console.log(location.state);
 	}, [location]);
 
 	const getUserItems = (items) => {
@@ -25,18 +24,26 @@ const ShowUser = () => {
 		return Parser(`<span> ${item} </span>`);
 	}
 
+	const getFieldValue = (field) => {
+		if (field) {
+			return Parser(field);
+		} else {
+			return '';
+		}
+	}
+
 	return (
 		<div className='show-user-container'>
 			<h2 className='user-page-title'>User search result page</h2>
 			<ul className='user-container'>
 				{/* user id field markup */}
 				<div className='user-id' >
-					<span className='field-name'>UseId: </span>{user?.id}
+					<span className='field-name'>UseId: </span>{getFieldValue(user.id)}
 				</div>
 
 				{/* user name field markup */}
 				<div className='user-name'>
-					<span className='field-name'>Name: </span>{(user?.name)}
+					<span className='field-name'>Name: </span>{getFieldValue(user.name)}
 				</div>
 
 				{/* search found in items field or not */}
@@ -46,14 +53,13 @@ const ShowUser = () => {
 
 				{/* user address field markup */}
 				<div className='user-address'>
-					<span className='field-name'>Address: </span>{(user?.address)}
+					<span className='field-name'>Address: </span>{getFieldValue(user.address)}
 				</div>
-
 
 
 				{/* user pincode field markup */}
 				<div className='user-pincode'>
-					<span className='field-name'>Pincode: </span>{user?.pincode}
+					<span className='field-name'>Pincode: </span>{getFieldValue(user.pincode)}
 				</div>
 			</ul>
 		</div>

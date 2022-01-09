@@ -2,7 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import './search-input.css'
 import { FaSearch } from "react-icons/fa";
-import { AiOutlineClose } from 'react-icons/ai'
+import { RiCloseLine } from 'react-icons/ri'
 
 const SearchInput = (props) => {
 	const history = useHistory();
@@ -58,7 +58,7 @@ const SearchInput = (props) => {
 					tabIndex={0}
 					onClick={(event) => props.clearUserSuggestions(event)}
 					onKeyDown={(event) => props.clearUserSuggestions(event)}>
-					<AiOutlineClose />
+					<RiCloseLine />
 				</span>
 			</div>
 		</React.Fragment>

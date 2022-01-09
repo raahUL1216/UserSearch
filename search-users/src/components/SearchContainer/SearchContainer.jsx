@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import SearchInput from '../SearchInput/SearchInput'
 import UserSuggestionCards from '../UserSuggestionCards/UserSuggestionCards'
 import { Constants } from '../../common/Constants'
+import './search-container.css'
 
 const SearchContainer = () => {
 	const history = useHistory();
@@ -12,6 +13,12 @@ const SearchContainer = () => {
 		searchText: '',
 		searchSuggestions: []
 	})
+
+	useEffect(() => {
+		let isSubscribed = true;
+
+		return () => (isSubscribed = false)
+	}, []);
 
 	const searchUsers = async (event, searchText) => {
 		const searchTerm = event.target?.value?.trim() || searchText;
@@ -125,7 +132,7 @@ const SearchContainer = () => {
 	}
 
 	return (
-		<div>
+		<div className='main-container'>
 			<SearchInput
 				searchText={userSearch.searchText}
 				searchUsers={searchUsers}
