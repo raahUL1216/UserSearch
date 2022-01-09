@@ -1,9 +1,9 @@
 .suggestion-container {
   list-style-type: none;
   position: absolute;
-  width: 400px;
+  width: min(90vw, 400px);
   border: 1px solid black;
-  padding: 1rem;
+  padding: 0;
   left: 1rem;
   top: 3rem;
   background-color: white;

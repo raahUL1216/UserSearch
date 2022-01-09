@@ -16,10 +16,8 @@ const UserSuggestionCards = (props) => {
 		if (!currentElement.classList.contains('selected-suggestion')) {
 			currentElement.classList.add('selected-suggestion');
 		}
-	}
 
-	const handleSuggestionClick = (event) => {
-		console.log('redirect to user page');
+		currentElement.focus();
 	}
 
 	return (
@@ -33,7 +31,6 @@ const UserSuggestionCards = (props) => {
 						suggestion={userSuggestion}
 						index={index}
 						highlightUserSuggestion={highlightUserSuggestion}
-						handleSuggestionClick={handleSuggestionClick}
 						setUserSearchDetails={props.setUserSearchDetails}
 					/>
 				)
