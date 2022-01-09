@@ -7,14 +7,14 @@ const UserSuggestionCards = (props) => {
 		// remove active class from all listed user suggestion
 		const userSuggestionElements = document.querySelectorAll("#searchResults .suggestion-card");
 		[].forEach.call(userSuggestionElements, function (ele) {
-			ele.classList.remove("active-user");
+			ele.classList.remove("selected-suggestion");
 		});
 
 		const currentElement = event.target;
 
 		// highlight focused user
-		if (!currentElement.classList.contains('active-user')) {
-			currentElement.classList.add('active-user');
+		if (!currentElement.classList.contains('selected-suggestion')) {
+			currentElement.classList.add('selected-suggestion');
 		}
 	}
 

@@ -53,14 +53,14 @@ class MongoDatabase {
 						'index': 'default',
 						'text': {
 							'query': searchTerm,
-							'path': ['name', 'address', 'items', 'id'],
+							'path': ['name', 'address', 'items', 'pincode', 'id'],
 							'fuzzy': {
 								'maxEdits': 2,  // number of edits required to match the word.can be 1 or 2
 								'prefixLength': 2  // prefix length to match while comparing
 							}
 						},
 						"highlight": {
-							'path': ['name', 'address', 'items', 'id'],
+							'path': ['name', 'address', 'items', 'pincode', 'id'],
 							"maxCharsToExamine": 5000, // optional, defaults to 500,000
 							"maxNumPassages": 5 // optional, defaults to 5
 						}
@@ -71,6 +71,7 @@ class MongoDatabase {
 						"name": 1,
 						'address': 1,
 						'items': 1,
+						'pincode': 1,
 						'id': 1,
 						'highlights': { $meta: "searchHighlights" }
 					}

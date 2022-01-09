@@ -1,17 +1,26 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom';
 import Parser from 'html-react-parser';
 import './user-suggestion-card.css'
 
 const UserSuggestionCard = (props) => {
+	const history = useHistory();
+
 	const handleSuggestionClick = (event, suggestion) => {
-		console.log('redirect to user page');
+		history.push({
+			pathname: '/user',
+			state: props.suggestion
+		});
 	}
 
 	const handleSuggestionKeyPress = (event, userId) => {
 		const keyPressed = (event.keyCode ? event.keyCode : event.which);
 
 		if (keyPressed === 13) { //Enter keycode
-			console.log('redirect to user page');
+			history.push({
+				pathname: '/user',
+				state: props.suggestion
+			});
 		}
 	}
 
@@ -53,6 +62,12 @@ const UserSuggestionCard = (props) => {
 			<div className='user-address'
 				onMouseOver={(event) => { event.stopPropagation(); }}>
 				{Parser(props.suggestion.address)}
+			</div>
+
+			{/* user pincode field markup */}
+			<div className='user-pincode'
+				onMouseOver={(event) => { event.stopPropagation(); }}>
+				{Parser(props.suggestion.pincode)}
 			</div>
 		</li>
 	)
