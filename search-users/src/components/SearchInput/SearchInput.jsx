@@ -56,8 +56,8 @@ const SearchInput = (props) => {
 
 				<span className='clear-icon'
 					tabIndex={0}
-					onClick={(event) => props.clearUserSuggestions(event)}
-					onKeyDown={(event) => props.clearUserSuggestions(event)}>
+					onClick={(event) => props.clearUserSuggestions(event, false)}
+					onKeyDown={(event) => props.clearUserSuggestions(event, true)}>
 					<RiCloseLine />
 				</span>
 			</div>

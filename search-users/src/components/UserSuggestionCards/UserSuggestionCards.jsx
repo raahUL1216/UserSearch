@@ -21,21 +21,34 @@ const UserSuggestionCards = (props) => {
 	}
 
 	return (
-		props.searchSuggestions.length > 0 &&
+		<React.Fragment>
+			{
+				props.searchSuggestions.length > 0 &&
 
-		<ul id='searchResults' className='suggestion-container'>
-			{props.searchSuggestions.map((userSuggestion, index) => {
-				return (
-					<UserSuggestionCard
-						key={userSuggestion.id}
-						suggestion={userSuggestion}
-						index={index}
-						highlightUserSuggestion={highlightUserSuggestion}
-						setUserSearchDetails={props.setUserSearchDetails}
-					/>
-				)
-			})}
-		</ul>
+				<ul id='searchResults' className='suggestion-container'>
+					{props.searchSuggestions.map((userSuggestion, index) => {
+						return (
+							<UserSuggestionCard
+								key={userSuggestion.id}
+								suggestion={userSuggestion}
+								index={index}
+								highlightUserSuggestion={highlightUserSuggestion}
+								setUserSearchDetails={props.setUserSearchDetails}
+							/>
+						)
+					})}
+				</ul>
+			}
+			{
+				props.searchSuggestions.length === 0 &&
+				props.searchText.length > 0 &&
+
+				<ul id='searchResults' className='suggestion-container no-user-found'>
+					<div className='no-user-found-message'>No user found</div>
+				</ul>
+			}
+
+		</React.Fragment>
 	)
 }
 

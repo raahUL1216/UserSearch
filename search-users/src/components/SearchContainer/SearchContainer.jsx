@@ -108,10 +108,18 @@ const SearchContainer = () => {
 		return result;
 	}
 
-	const clearUserSuggestions = (event) => {
-		const keyPressed = (event?.keyCode ? event?.which : event?.key);
+	const clearUserSuggestions = (event, isKeyboardEvent) => {
+		if (isKeyboardEvent) {
+			const keyPressed = (event?.keyCode ? event?.which : event?.key);
 
-		if (keyPressed === 13) { //Enter keycode
+			if (keyPressed === 13) { //Enter keycode
+				setUserSearchDetails({
+					...userSearch,
+					searchText: '',
+					searchSuggestions: []
+				})
+			}
+		} else {
 			setUserSearchDetails({
 				...userSearch,
 				searchText: '',
@@ -140,6 +148,7 @@ const SearchContainer = () => {
 				clearUserSuggestions={clearUserSuggestions}
 			/>
 			<UserSuggestionCards
+				searchText={userSearch.searchText}
 				searchSuggestions={userSearch.searchSuggestions}
 				setUserSearchDetails={setUserSearchDetails}
 				showUserPage={showUserPage}
