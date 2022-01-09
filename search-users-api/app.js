@@ -20,12 +20,8 @@ app.use(function (req, res, next) {
 	next();
 });
 
-app.get('/', (req, res) => {
-	res.send('Test API working!')
-})
-
-app.get('/search-users/:searchTerm', async (req, res) => {
-	const searchTerm = req.params.searchTerm;
+app.get('/search-users/', async (req, res) => {
+	const searchTerm = req.query.searchTerm;
 	console.log('searchTerm: ' + searchTerm);
 
 	try {

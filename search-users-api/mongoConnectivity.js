@@ -1,12 +1,10 @@
 "use strict";
 import { MongoClient } from "mongodb";
-
-const uri = "mongodb+srv://rahul:Welcome@testcluster.zcxmg.mongodb.net/Database?retryWrites=true&w=majority";
-
+import assert from 'assert';
 class MongoDatabase {
-	constructor(batchSize) {
+	constructor() {
 		this.client = new MongoClient(
-			uri,
+			'mongodb+srv://rahul:Welcome@testcluster.zcxmg.mongodb.net/Database?retryWrites=true&w=majority',
 			{ useUnifiedTopology: true }
 		);
 		this.collection = null;
@@ -16,12 +14,14 @@ class MongoDatabase {
 	// connect to mongo db and set given database and collection instance
 	async connect(dbName, collectionName) {
 		try {
-			await this.client.connect();
-			const database = this.client.db(dbName);
-			this.collection = database.collection(collectionName);
+			if (!this.isConnectionEstablished) {
+				await this.client.connect();
+				const database = this.client.db(dbName);
+				this.collection = database.collection(collectionName);
 
-			this.isConnectionEstablished = true;
-			console.log('Connected to mongo db sucessfully.');
+				this.isConnectionEstablished = true;
+				console.log('Connected to mongo db sucessfully.');
+			}
 		}
 		catch (error) {
 			console.log('Error while connecting to mongo db.', error);
@@ -33,6 +33,7 @@ class MongoDatabase {
 		try {
 			if (this.isConnectionEstablished) {
 				await this.client.close();
+				this.isConnectionEstablished = false;
 			}
 		}
 		catch (error) {
@@ -42,18 +43,46 @@ class MongoDatabase {
 	}
 
 	async getUsers(searchTerm) {
-		let cursor, users;
+		let cursor, users = [];
 
 		try {
-			cursor = this.collection.find({}, { _id: 0 });
-			users = await cursor.toArray();
+			cursor = await this.collection.aggregate([
+				{
+					'$search': {
+						'index': 'default',
+						'text': {
+							'query': searchTerm,
+							'path': ['name', 'address', 'items', 'id'],
+							'fuzzy': {
+								'maxEdits': 2,
+								'prefixLength': 2
+							}
+						},
+						"highlight": {
+							'path': ['name', 'address', 'items', 'id'],
+							"maxCharsToExamine": 5000, // optional, defaults to 500,000
+							"maxNumPassages": 5 // optional, defaults to 5
+						}
+					}
+				},
+				{
+					'$project': {
+						"name": 1,
+						'address': 1,
+						'items': 1,
+						'id': 1,
+						'highlights': { $meta: "searchHighlights" }
+					}
+				}
+			]).toArray();
+
+			for await (const user of cursor) {
+				users.push(user);
+			}
 		}
 		catch (error) {
 			console.log('Error while searching users.', error);
 			throw error;
-		}
-		finally {
-			await cursor.close();
 		}
 
 		return users;

@@ -9,6 +9,10 @@ const SearchInput = (props) => {
 			props.searchUsers(event);
 			console.log('redirect to show search results')
 		}
+
+		if (keyPressed === 9) { //Tab keycode
+
+		}
 	}
 
 	return (
@@ -19,8 +23,9 @@ const SearchInput = (props) => {
 				value={props.searchText}
 				onChange={props.searchUsers}
 				onKeyDown={showSeachResultsPage}
+				onFocus={showSeachResultsPage}
 				name="searchTerm"
-				autoFocus="autofocus"
+				autoFocus
 			/>
 			<span className="search-icon">
 				<span className="glass"></span>
