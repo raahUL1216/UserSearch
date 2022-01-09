@@ -1,10 +1,9 @@
 import React from 'react'
-// import { ReactDOM } from 'react-dom'
 import UserSuggestionCard from '../UserSuggestionCard/UserSuggestionCard'
 import './user-suggestion-cards.css'
 
 const UserSuggestionCards = (props) => {
-	const highlightUser = (event) => {
+	const highlightUserSuggestion = (event) => {
 		// remove active class from all listed user suggestion
 		const userSuggestionElements = document.querySelectorAll("#searchResults .suggestion-card");
 		[].forEach.call(userSuggestionElements, function (ele) {
@@ -13,19 +12,14 @@ const UserSuggestionCards = (props) => {
 
 		const currentElement = event.target;
 
-		// highlight user
+		// highlight focused user
 		if (!currentElement.classList.contains('active-user')) {
 			currentElement.classList.add('active-user');
 		}
-
-		// focus hovered suggestion
-		// ReactDOM.findDOMNode(this.refs.theDiv).focus();
-
-		return false;
 	}
 
 	const handleSuggestionClick = (event) => {
-		// redirect to user page
+		console.log('redirect to user page');
 	}
 
 	return (
@@ -38,7 +32,7 @@ const UserSuggestionCards = (props) => {
 						key={userSuggestion.id}
 						suggestion={userSuggestion}
 						index={index}
-						highlightUser={highlightUser}
+						highlightUserSuggestion={highlightUserSuggestion}
 						handleSuggestionClick={handleSuggestionClick}
 						setUserSearchDetails={props.setUserSearchDetails}
 					/>
