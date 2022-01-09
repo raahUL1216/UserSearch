@@ -46,6 +46,7 @@ class MongoDatabase {
 		let cursor, users = [];
 
 		try {
+			// fuzzy search for users
 			cursor = await this.collection.aggregate([
 				{
 					'$search': {
@@ -54,8 +55,8 @@ class MongoDatabase {
 							'query': searchTerm,
 							'path': ['name', 'address', 'items', 'id'],
 							'fuzzy': {
-								'maxEdits': 2,
-								'prefixLength': 2
+								'maxEdits': 2,  // number of edits required to match the word.can be 1 or 2
+								'prefixLength': 2  // prefix length to match while comparing
 							}
 						},
 						"highlight": {

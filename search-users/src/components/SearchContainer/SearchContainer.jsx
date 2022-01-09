@@ -4,21 +4,22 @@ import UserSuggestionCards from '../UserSuggestionCards/UserSuggestionCards'
 import { Constants } from '../../common/Constants'
 
 const SearchContainer = () => {
+	// state for input search terma and user search suggestions
 	const [userSearch, setUserSearchDetails] = useState({
 		searchText: '',
 		searchSuggestions: []
 	})
 
-	const searchUsers = (event) => {
-		const searchTerm = event.target.value?.trim();
+	const searchUsers = async (event, searchText) => {
+		const searchTerm = event.target?.value?.trim() || searchText;
 
 		setUserSearchDetails({
 			...userSearch,
 			searchText: searchTerm,
 		})
 
-		// TODO call api to get the results
-		getUsers(searchTerm);
+		// back end api to search users
+		await getUsers(searchTerm);
 	}
 
 	const getUsers = async (searchTerm) => {
@@ -30,42 +31,7 @@ const SearchContainer = () => {
 				.then(res => res.json())
 				.then(
 					(result) => {
-						result.forEach(suggestion => {
-							Object.keys(suggestion).forEach(fieldName => {
-								suggestion.highlights.forEach((highlight) => {
-									if (fieldName !== 'items' && highlight.path === fieldName) {
-										let texts = highlight.texts;
-										let replacements = texts.map(text => {
-											const matchedValue = `<strong> ${text.value} </strong>`;
-
-											if (text.type === "hit") {
-												return matchedValue;
-											} else {
-												return text.value;
-											}
-										}).join("");
-
-										let originals = texts.map(text => {
-											return text.value;
-										}).join("");
-
-										suggestion[fieldName] = suggestion[fieldName].replace(originals, replacements)
-									} else if (fieldName === 'items' && highlight.path === fieldName) {
-										let texts = highlight.texts;
-										let itemField = texts.reduce((acc, text) => {
-											if (text.type === 'hit') {
-												acc = `"${text.value}" found in items.`;
-											} else {
-												acc = '';
-											}
-											return acc;
-										}, '');
-
-										suggestion['itemSearch'] = itemField;
-									}
-								});
-							});
-						});
+						result = prepareMarkpupData(result);
 
 						// Update the prepared markup
 						if (result.length > 0) {
@@ -89,6 +55,56 @@ const SearchContainer = () => {
 		}
 	}
 
+	const prepareMarkpupData = (result) => {
+		result.forEach(suggestion => {
+			Object.keys(suggestion).forEach(fieldName => {
+				suggestion.highlights.forEach((highlight) => {
+					// prepare mark up for fields other than items
+					if (fieldName !== 'items' && highlight.path === fieldName) {
+						let texts = highlight.texts;
+						let replacements = texts.map(text => {
+							const matchedValue = `<span class="word-found"> ${text.value} </span>`;
+
+							if (text.type === "hit") {
+								return matchedValue;
+							} else {
+								return text.value;
+							}
+						}).join("");
+
+						let originals = texts.map(text => {
+							return text.value;
+						}).join("");
+
+						suggestion[fieldName] = suggestion[fieldName].replace(originals, replacements)
+					} else if (fieldName === 'items' && highlight.path === fieldName) {
+						// prepare mark up for field items
+						let texts = highlight.texts;
+						let itemField = texts.reduce((acc, text) => {
+							if (text.type === 'hit') {
+								acc = `"${text.value}" found in items.`;
+							} else {
+								acc = '';
+							}
+							return acc;
+						}, '');
+
+						suggestion['itemSearch'] = itemField;
+					}
+				});
+			});
+		});
+
+		return result;
+	}
+
+	const clearUserSuggestions = () => {
+		setUserSearchDetails({
+			...userSearch,
+			searchText: '',
+			searchSuggestions: []
+		})
+	}
 
 	const showUserPage = (event) => {
 		const keyPressed = (event.keyCode ? event.keyCode : event.which);
@@ -103,6 +119,7 @@ const SearchContainer = () => {
 			<SearchInput
 				searchText={userSearch.searchText}
 				searchUsers={searchUsers}
+				clearUserSuggestions={clearUserSuggestions}
 			/>
 			<UserSuggestionCards
 				searchSuggestions={userSearch.searchSuggestions}

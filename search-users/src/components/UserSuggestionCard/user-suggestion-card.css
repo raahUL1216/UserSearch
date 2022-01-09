@@ -5,7 +5,7 @@
 
 .suggestion-card .user-id {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .suggestion-card .user-name {
@@ -29,14 +29,17 @@
 }
 
 ul.item-search-text li::before {
-  content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
-  color: rgb(14, 105, 223);
-  font-weight: bold;
+  content: "\2022"; /* \2022 is the CSS unicode for a bullet */
+  color: #0e69df;
   display: inline-block;
   width: 1em;
-  margin-left: -1em;
 }
 
 .active-user {
-  background: #f8baf8;
+  background: #f8c79e;
+}
+
+.word-found {
+  color: #0e69df;
+  font-weight: 500;
 }

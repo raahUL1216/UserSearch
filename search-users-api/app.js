@@ -28,11 +28,12 @@ app.get('/search-users/', async (req, res) => {
 		const MongoDB = new MongoDatabase();
 		await MongoDB.connect("Database", "Users");
 
+		// remove default _id of MongoDB
 		const users = await MongoDB.getUsers(searchTerm);
 		users.map(user => { delete user._id; });
 
 		const response = JSON.stringify(users);
-		console.log('Response recevied. Type: ' + typeof response);
+		console.log('Response recevied.');
 
 		res.send(response);
 	}

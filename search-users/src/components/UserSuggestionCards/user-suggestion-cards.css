@@ -1,13 +1,13 @@
 .suggestion-container {
-  width: 300px;
-  border: 1px solid black;
+  list-style-type: none;
   position: absolute;
+  width: 400px;
+  border: 1px solid black;
+  padding: 1rem;
   left: 1rem;
   top: 3rem;
-  padding: 1rem;
   background-color: white;
   font-size: 1rem;
-  list-style-type: none;
 
   /* make suggestion card container scrollable */
   height: 300px;
