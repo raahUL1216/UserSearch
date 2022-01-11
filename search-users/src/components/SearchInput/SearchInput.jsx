@@ -19,11 +19,11 @@ const SearchInput = (props) => {
 		}
 	}
 
-	const showSeachResultsPage = (event) => {
+	const showSeachResultsPage = async (event) => {
 		const keyPressed = (event?.keyCode ? event?.which : event?.key);
 
 		if (keyPressed === 13) { //Enter keycode
-			props.searchUsers(event, props.searchText);
+			await props.getUsers(props.searchText);
 
 			history.push({
 				pathname: '/searches',
@@ -47,7 +47,7 @@ const SearchInput = (props) => {
 						className='input-search'
 						placeholder="Search users by ID, address, name, items."
 						value={props.searchText}
-						onChange={(event) => { props.searchUsers(event, event.target.value) }}
+						onChange={(event) => { props.startSearch(event.target.value) }}
 						onKeyDown={(event) => showSeachResultsPage(event)}
 						name="searchTerm"
 						autoFocus

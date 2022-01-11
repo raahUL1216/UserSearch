@@ -33,7 +33,8 @@ app.get('/search-users/', async (req, res) => {
 		users.map(user => { delete user._id; });
 
 		const response = JSON.stringify(users);
-		console.log('Response recevied.');
+		console.log('response: ');
+		console.log(users);
 
 		res.send(response);
 	}

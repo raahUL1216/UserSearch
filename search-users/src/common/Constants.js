@@ -3,5 +3,6 @@ export const Constants = {
 	headers: {
 		'Content-Type': 'application/json',
 		'Accept': 'application/json'
-	}
+	},
+	searchDelay: 300 // in ms
 }
