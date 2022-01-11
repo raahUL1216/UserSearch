@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import SearchInput from '../SearchInput/SearchInput'
 import UserSuggestionCards from '../UserSuggestionCards/UserSuggestionCards'
@@ -7,6 +7,7 @@ import './search-container.css'
 
 const SearchContainer = () => {
 	const history = useHistory();
+	const waitTime = Constants.searchDelay;
 
 	// state for input search terma and user search suggestions
 	const [userSearch, setUserSearchDetails] = useState({
@@ -14,27 +15,36 @@ const SearchContainer = () => {
 		searchSuggestions: []
 	})
 
-	useEffect(() => {
-		let isSubscribed = true;
+	const startSearch = function (fn, searchWaitTime) {
+		let timer;
 
-		return () => (isSubscribed = false)
-	}, []);
+		return function () {
+			let context = this,
+				args = arguments;
 
-	const searchUsers = async (event, searchText) => {
-		const searchTerm = event.target?.value?.trim() || searchText;
+			// console.log(args);
 
-		setUserSearchDetails({
-			...userSearch,
-			searchText: searchTerm,
-		})
+			setUserSearchDetails((prevState) => {
+				return {
+					...prevState,
+					searchText: args[0],
+				}
+			});
 
-		// back end api to search users
-		await getUsers(searchTerm);
+			clearTimeout(timer);
+
+			timer = setTimeout(() => {
+				fn.apply(context, args);
+			}, searchWaitTime);
+		};
 	}
 
 	const getUsers = async (searchTerm) => {
-		const searchAPIURI = Constants.searchAPI + "search-users/?searchTerm=" + searchTerm,
+		// console.log('in getUsers: ' + searchTerm);
+		const searchAPIURI = `${Constants.searchAPI}search-users/?searchTerm=${searchTerm}`,
 			headers = Constants.headers;
+
+		console.log(searchAPIURI);
 
 		if (searchTerm) {
 			await fetch(searchAPIURI, { headers })
@@ -43,12 +53,13 @@ const SearchContainer = () => {
 					(result) => {
 						result = prepareMarkpupData(result);
 
-						// Update the prepared markup
+						// update the prepared markup
 						if (result.length > 0) {
-							setUserSearchDetails({
-								...userSearch,
-								searchText: searchTerm,
-								searchSuggestions: result
+							setUserSearchDetails((prevState) => {
+								return {
+									...prevState,
+									searchSuggestions: result
+								}
 							});
 						}
 					},
@@ -57,13 +68,17 @@ const SearchContainer = () => {
 					});
 		} else {
 			// when input is empty, remove suggestions
-			setUserSearchDetails({
-				...userSearch,
-				searchText: '',
-				searchSuggestions: []
+			setUserSearchDetails((prevState) => {
+				return {
+					...prevState,
+					searchSuggestions: []
+				}
 			});
 		}
 	}
+
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const debounceSearch = useCallback(startSearch(getUsers, waitTime), []);
 
 	const prepareMarkpupData = (result) => {
 		result.forEach(suggestion => {
@@ -143,7 +158,8 @@ const SearchContainer = () => {
 		<div className='main-container'>
 			<SearchInput
 				searchText={userSearch.searchText}
-				searchUsers={searchUsers}
+				startSearch={debounceSearch}
+				getUsers={getUsers}
 				searchSuggestions={userSearch.searchSuggestions}
 				clearUserSuggestions={clearUserSuggestions}
 			/>
