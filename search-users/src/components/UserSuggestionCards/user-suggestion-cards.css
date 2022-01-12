@@ -1,17 +1,28 @@
 .suggestion-container {
-  list-style-type: none;
   position: absolute;
-  width: min(90vw, 400px);
-  border: 1px solid black;
+  list-style-type: none;
+  width: min(98vw, 400px);
   padding: 0;
-  left: 1rem;
-  top: 3rem;
-  background-color: white;
+  margin: 0;
   font-size: 1rem;
+  background: var(--color-bg-search-input);
+  box-shadow: 0.25rem 0.25rem 0.25rem #eceaea;
 
   /* make suggestion card container scrollable */
   height: 300px;
   overflow-y: auto;
+}
+
+.suggestion-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.suggestion-container::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.suggestion-container::-webkit-scrollbar-thumb {
+  background-color: #b6b6b6;
 }
 
 .suggestion-container.no-user-found {
