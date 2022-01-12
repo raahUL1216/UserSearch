@@ -33,35 +33,28 @@ const SearchInput = (props) => {
 	}
 
 	return (
-		<React.Fragment>
-			<div className='input-search-container'>
-				<div className="search-icon"
-					tabIndex={0}
-					onClick={(event) => showUserSuggestions(event, false)}
-					onKeyDown={(event) => showUserSuggestions(event, true)}>
-					<FaSearch />
-				</div>
+		<div className='input-wrapper'>
+			<FaSearch className='input-search-icon'
+				tabIndex={0}
+				onClick={(event) => showUserSuggestions(event, false)}
+				onKeyDown={(event) => showUserSuggestions(event, true)} />
 
-				<div className='input-container'>
-					<input type="text"
-						className='input-search'
-						placeholder="Search users by ID, address, name, items."
-						value={props.searchText}
-						onChange={(event) => { props.startSearch(event.target.value) }}
-						onKeyDown={(event) => showSeachResultsPage(event)}
-						name="searchTerm"
-						autoFocus
-					/>
-				</div>
+			<input type="text"
+				className='input-search'
+				placeholder="Search users by ID, address, name, items."
+				value={props.searchText}
+				onChange={(event) => { props.startSearch(event.target.value) }}
+				onKeyDown={(event) => showSeachResultsPage(event)}
+				name="searchTerm"
+				autoFocus
+			/>
 
-				<span className='clear-icon'
-					tabIndex={0}
-					onClick={(event) => props.clearUserSuggestions(event, false)}
-					onKeyDown={(event) => props.clearUserSuggestions(event, true)}>
-					<RiCloseLine />
-				</span>
-			</div>
-		</React.Fragment>
+			<RiCloseLine className='input-clear-icon'
+				tabIndex={0}
+				onClick={(event) => props.clearUserSuggestions(event, false)}
+				onKeyDown={(event) => props.clearUserSuggestions(event, true)}
+			/>
+		</div>
 	)
 }
 

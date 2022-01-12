@@ -1,9 +1,3 @@
 * {
   box-sizing: border-box;
 }
-
-div:focus,
-span:focus {
-  outline: none;
-  background: #f8c79e;
-}
