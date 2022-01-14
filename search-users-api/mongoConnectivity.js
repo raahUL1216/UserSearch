@@ -1,6 +1,6 @@
 "use strict";
 import { MongoClient } from "mongodb";
-import assert from 'assert';
+
 class MongoDatabase {
 	constructor() {
 		this.client = new MongoClient(

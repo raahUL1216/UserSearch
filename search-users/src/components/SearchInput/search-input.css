@@ -1,11 +1,11 @@
-.input-search,
-.input-search-icon,
-.input-clear-icon {
+.search-input,
+.search-input-icon,
+.clear-input-icon {
   font-size: 1.5rem;
   color: grey;
 }
 
-.input-wrapper {
+.search-input-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,7 +16,7 @@
   margin-top: 1rem;
 }
 
-.input-search {
+.search-input {
   width: 100%;
   margin: 0 0.5rem 0 0.5rem;
   border: none;
@@ -25,6 +25,6 @@
   color: grey;
 }
 
-.input-search::placeholder {
+.search-input::placeholder {
   color: grey;
 }
