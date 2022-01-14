@@ -1,58 +1,66 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import './search-input.css'
+import { EventKeyCode } from '../../constants/EventKeyCodes'
 import { FaSearch } from "react-icons/fa";
 import { RiCloseLine } from 'react-icons/ri'
+import './search-input.css'
 
 const SearchInput = (props) => {
 	const history = useHistory();
 
-	const showUserSuggestions = (event, isKeyboardEvent) => {
+	const showSuggestions = (event, isKeyboardEvent) => {
 		if (isKeyboardEvent) {
-			const keyPressed = (event.keyCode ? event.keyCode : event.which);
+			const keyPressed = event.which || event.keyCode || 0;
 
-			if (keyPressed === 13) { //Enter keycode
-				showSeachResultsPage(event);
+			if (keyPressed === EventKeyCode.Enter) {
+				showUserSearchesPage(event);
 			}
 		} else {
-			showSeachResultsPage(event);
+			showUserSearchesPage(event, isKeyboardEvent);
 		}
 	}
 
-	const showSeachResultsPage = async (event) => {
-		const keyPressed = (event?.keyCode ? event?.which : event?.key);
+	const showUserSearchesPage = async (event, isKeyboardEvent) => {
+		const keyPressed = event.which || event.keyCode || 0;
 
-		if (keyPressed === 13) { //Enter keycode
-			await props.getUsers(props.searchText);
-
-			history.push({
-				pathname: '/searches',
-				state: props.searchSuggestions
-			});
+		if (props.searchText) {
+			if (isKeyboardEvent) {
+				if (keyPressed === EventKeyCode.Enter) {
+					history.push({
+						pathname: '/searches',
+						state: props.searchText
+					});
+				}
+			} else {
+				history.push({
+					pathname: '/searches',
+					state: props.searchText
+				});
+			}
 		}
 	}
 
 	return (
-		<div className='input-wrapper'>
-			<FaSearch className='input-search-icon'
+		<div className='search-input-wrapper'>
+			<FaSearch className='search-input-icon'
 				tabIndex={0}
-				onClick={(event) => showUserSuggestions(event, false)}
-				onKeyDown={(event) => showUserSuggestions(event, true)} />
+				onClick={(event) => showSuggestions(event, false)}
+				onKeyDown={(event) => showSuggestions(event, true)} />
 
 			<input type="text"
-				className='input-search'
+				className='search-input'
 				placeholder="Search users by ID, address, name, items."
 				value={props.searchText}
 				onChange={(event) => { props.startSearch(event.target.value) }}
-				onKeyDown={(event) => showSeachResultsPage(event)}
-				name="searchTerm"
+				onKeyDown={(event) => showUserSearchesPage(event, true)}
+				name="searchText"
 				autoFocus
 			/>
 
-			<RiCloseLine className='input-clear-icon'
+			<RiCloseLine className='clear-input-icon'
 				tabIndex={0}
-				onClick={(event) => props.clearUserSuggestions(event, false)}
-				onKeyDown={(event) => props.clearUserSuggestions(event, true)}
+				onClick={(event) => props.clearSuggestions(event, false)}
+				onKeyDown={(event) => props.clearSuggestions(event, true)}
 			/>
 		</div>
 	)

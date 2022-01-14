@@ -1,0 +1,53 @@
+.suggestion-card .id,
+.suggestion-card .name {
+  font-size: 1rem;
+}
+
+.suggestion-card .id {
+  font-weight: 500;
+}
+
+.suggestion-card .name {
+  font-style: italic;
+}
+
+.suggestion-card .item-search-text {
+  display: list-item;
+  /* TODO */
+  /* margin-left: 1.4em; */
+  margin: 3px;
+  list-style-type: circle;
+  padding: 0.3rem 0.3rem 0.3rem 0;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.suggestion-card .item-search-text::marker {
+  color: #0e69df;
+}
+
+.suggestion-card .address,
+.suggestion-card .pincode {
+  font-size: 0.8rem;
+}
+
+.suggestion-card .id,
+.suggestion-card .name,
+.suggestion-card .item-search-text,
+.suggestion-card .address,
+.suggestion-card .pincode {
+  padding: 3px;
+}
+
+.show-user-container .id,
+.show-user-container .name,
+.show-user-container .items,
+.show-user-container .address,
+.show-user-container .pincode,
+.show-search-results-container .id,
+.show-search-results-container .name,
+.show-search-results-container .items,
+.show-search-results-container .address,
+.show-search-results-container .pincode {
+  display: inline-block;
+}

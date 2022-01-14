@@ -1,26 +1,34 @@
 import React from 'react';
 import './App.css';
 import {
+	BrowserRouter as Router,
 	Switch,
 	Route
 } from "react-router-dom";
+import ShowUserSearches from './pages/ShowUserSearches/ShowUserSearches';
+import ShowUser from './pages/ShowUser/ShowUser';
 import SearchContainer from './components/SearchContainer/SearchContainer';
-import ShowSearchResult from './components/ShowSearchResult/ShowSearchResult';
-import ShowUser from './components/ShowUser/ShowUser';
 
 function App() {
 	return (
-		<Switch>
-			<Route path="/searches">
-				<ShowSearchResult />
-			</Route>
-			<Route path="/user">
-				<ShowUser />
-			</Route>
-			<Route path="/">
-				<SearchContainer />
-			</Route>
-		</Switch>
+		<Router>
+			<Switch>
+				{/* user search results page */}
+				<Route path="/searches">
+					<ShowUserSearches />
+				</Route>
+
+				{/* user details page */}
+				<Route path="/user">
+					<ShowUser />
+				</Route>
+
+				{/* user search page */}
+				<Route path="/">
+					<SearchContainer />
+				</Route>
+			</Switch>
+		</Router>
 	);
 }
 
