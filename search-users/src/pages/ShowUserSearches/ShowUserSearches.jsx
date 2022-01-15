@@ -49,13 +49,15 @@ const ShowUserSearches = () => {
 	}, [searchText]);
 
 	return (
-		<div className='show-search-results-container'>
+		<div className='show-search-results-container'
+			data-testid='show-search-results'>
 			<h2 className='search-page-title'>User search result page</h2>
 			<ul className='user-suggestion-list'>
 				{
-					searchSuggestions?.map((suggestion) => {
+					searchSuggestions?.map((suggestion, index) => {
 						return (
-							<li key={suggestion.id}>
+							<li key={suggestion.id}
+								data-testid={'suggestion-' + index}>
 								<div>
 									<span className='field-name'>UseId: </span>
 									<UserProperty

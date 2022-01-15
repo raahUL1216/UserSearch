@@ -33,16 +33,20 @@ const SuggestionCards = (props) => {
 			{
 				props.searchSuggestions.length > 0 &&
 
-				<ul id='userSearchResults' className={"suggestion-container " + (userNotFound() ? "no-user" : "")}>
+				<ul id='userSearchResults'
+					className={"suggestion-container " + (userNotFound() ? "no-user" : "")}
+					data-testid='suggestion-list'
+				>
 					{
 						userNotFound()
 							? <li>No user found</li>
-							: props.searchSuggestions.map((suggestion) => {
+							: props.searchSuggestions.map((suggestion, index) => {
 								return (
 									<SuggestionCard
 										key={suggestion.id}
 										suggestion={suggestion}
 										highlightSuggestion={highlightSuggestion}
+										index={index}
 									/>
 								)
 							})

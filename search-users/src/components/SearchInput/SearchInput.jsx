@@ -41,7 +41,9 @@ const SearchInput = (props) => {
 			<FaSearch className='search-input-icon'
 				tabIndex={0}
 				onClick={(event) => showSuggestions(event, false)}
-				onKeyDown={(event) => showSuggestions(event, true)} />
+				onKeyDown={(event) => showSuggestions(event, true)}
+				data-testid='search-input-icon'
+			/>
 
 			<input type="text"
 				className='search-input'
@@ -49,6 +51,7 @@ const SearchInput = (props) => {
 				value={props.searchText}
 				onChange={(event) => { props.startSearch(event.target.value) }}
 				onKeyDown={(event) => showUserSearchesPage(event, true)}
+				data-testid="search-input"
 				name="searchText"
 				autoFocus
 			/>
@@ -57,6 +60,7 @@ const SearchInput = (props) => {
 				tabIndex={0}
 				onClick={(event) => props.clearSuggestions(event, false)}
 				onKeyDown={(event) => props.clearSuggestions(event, true)}
+				data-testid='clear-input-icon'
 			/>
 		</div>
 	)

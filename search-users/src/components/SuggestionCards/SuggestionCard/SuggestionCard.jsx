@@ -33,6 +33,7 @@ const SuggestionCard = (props) => {
 			onClick={(event) => showSuggestion(event, false)}
 			onMouseOver={(event) => { props.highlightSuggestion(event) }}
 			onFocus={(event) => { props.highlightSuggestion(event) }}
+			data-testid={'suggestion-' + props.index}
 		>
 			{/* user field markups */}
 			<UserProperty

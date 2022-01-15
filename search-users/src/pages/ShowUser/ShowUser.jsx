@@ -12,7 +12,8 @@ const ShowUser = () => {
 	}, [location]);
 
 	return (
-		<div className='show-user-container'>
+		<div className='show-user-container'
+			data-testid='show-user-page'>
 			<h2 className='user-page-title'>User search result page</h2>
 			<ul className='user-container'>
 				<div>
