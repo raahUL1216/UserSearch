@@ -59,6 +59,7 @@ const ShowUserSearches = () => {
 									<span className='field-name'>UseId: </span>
 									<UserProperty
 										propertyClass='id'
+										propertyName='id'
 										propertyValue={suggestion.id}
 									/>
 								</div>
@@ -67,6 +68,7 @@ const ShowUserSearches = () => {
 									<span className='field-name'>Name: </span>
 									<UserProperty
 										propertyClass='name'
+										propertyName='name'
 										propertyValue={suggestion.name}
 									/>
 								</div>
@@ -75,6 +77,7 @@ const ShowUserSearches = () => {
 									<span className='field-name'>Items: </span>
 									<UserProperty
 										propertyClass='items'
+										propertyName='items'
 										propertyValue={suggestion.items?.join(', ')}
 									/>
 								</div>
@@ -83,6 +86,7 @@ const ShowUserSearches = () => {
 									<span className='field-name'>Address: </span>
 									<UserProperty
 										propertyClass='address'
+										propertyName='address'
 										propertyValue={suggestion.address}
 									/>
 								</div>
@@ -91,6 +95,7 @@ const ShowUserSearches = () => {
 									<span className='field-name'>Pincode: </span>
 									<UserProperty
 										propertyClass='pincode'
+										propertyName='pincode'
 										propertyValue={suggestion.pincode}
 									/>
 								</div>

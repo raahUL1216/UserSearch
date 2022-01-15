@@ -19,9 +19,11 @@ const SearchContainer = () => {
 			const keyPressed = event.which || event.keyCode || 0;
 
 			if (keyPressed === EventKeyCode.Enter) {
+				setSearchText('');
 				setSearchSuggestions([]);
 			}
 		} else {
+			setSearchText('');
 			setSearchSuggestions([]);
 		}
 	}
@@ -41,6 +43,8 @@ const SearchContainer = () => {
 	const getUsers = async (searchTerm) => {
 		const searchAPIURI = `${Constants.searchAPI}search-users/?searchTerm=${searchTerm}`,
 			headers = Constants.headers;
+
+		console.log(searchAPIURI);
 
 		if (searchTerm) {
 			await fetch(searchAPIURI, { headers })
@@ -90,7 +94,6 @@ const SearchContainer = () => {
 				startSearch={debounceSearch}
 				setSearchSuggestions={setSearchSuggestions}
 				clearSuggestions={clearSuggestions}
-				getUsers={getUsers}
 			/>
 
 			<SuggestionCards

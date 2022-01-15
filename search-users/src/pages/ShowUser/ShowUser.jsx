@@ -19,6 +19,7 @@ const ShowUser = () => {
 					<span className='field-name'>UseId: </span>
 					<UserProperty
 						propertyClass='id'
+						propertyName='id'
 						propertyValue={user.id}
 					/>
 				</div>
@@ -27,6 +28,7 @@ const ShowUser = () => {
 					<span className='field-name'>Name: </span>
 					<UserProperty
 						propertyClass='name'
+						propertyName='name'
 						propertyValue={user.name}
 					/>
 				</div>
@@ -35,6 +37,7 @@ const ShowUser = () => {
 					<span className='field-name'>Items: </span>
 					<UserProperty
 						propertyClass='items'
+						propertyName='items'
 						propertyValue={user.items?.join(', ')}
 					/>
 				</div>
@@ -43,6 +46,7 @@ const ShowUser = () => {
 					<span className='field-name'>Address: </span>
 					<UserProperty
 						propertyClass='address'
+						propertyName='address'
 						propertyValue={user.address}
 					/>
 				</div>
@@ -51,6 +55,7 @@ const ShowUser = () => {
 					<span className='field-name'>Pincode: </span>
 					<UserProperty
 						propertyClass='pincode'
+						propertyName='pincode'
 						propertyValue={user.pincode}
 					/>
 				</div>
