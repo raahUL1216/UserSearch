@@ -1,42 +1,38 @@
-export const prepareUserSearchMarkup = (result) => {
-	result.forEach(suggestion => {
-		Object.keys(suggestion).forEach(fieldName => {
-			suggestion.highlights.forEach((highlight) => {
-				// prepare mark up for fields other than items
-				if (fieldName !== 'items' && highlight.path === fieldName) {
-					let texts = highlight.texts;
-					let replacements = texts.map(text => {
-						const matchedValue = `<span class="word-found"> ${text.value} </span>`;
+import { SearchText } from "../constants/SearchText";
 
-						if (text.type === "hit") {
-							return matchedValue;
+export const prepareUserSearchMarkup = (suggestions) => {
+	suggestions?.forEach(suggestion => {
+		// iterate in each suggestion and prepare the markup for each property
+		Object.keys(suggestion).forEach(fieldName => {
+
+			suggestion.highlights.forEach((highlight) => {
+				if (isItemsProperty(fieldName, highlight.path)) {
+					// if searchTerm is found in items array, then show it using markup
+					let itemObject = highlight.texts.find(text => text.type === SearchText.Found);
+					suggestion['itemSearch'] = itemObject ? `"${itemObject.value}" found in items.` : '';
+				} else if (highlight.path === fieldName) {
+					let texts = highlight.texts;
+					// get original and markup replacement value
+					let originalValue = texts.map(text => text.value).join('');
+
+					let markupReplacementValue = texts.map((text) => {
+						if (text.type === SearchText.Found) {
+							return `<span class="text-found"> ${text.value} </span>`;
 						} else {
 							return text.value;
 						}
-					}).join("");
+					}).join('');;
 
-					let originals = texts.map(text => {
-						return text.value;
-					}).join("");
-
-					suggestion[fieldName] = suggestion[fieldName].replace(originals, replacements)
-				} else if (fieldName === 'items' && highlight.path === fieldName) {
-					// prepare mark up for field items
-					let texts = highlight.texts;
-					let itemField = texts.reduce((acc, text) => {
-						if (text.type === 'hit') {
-							acc = `"${text.value}" found in items.`;
-						} else {
-							acc = '';
-						}
-						return acc;
-					}, '');
-
-					suggestion['itemSearch'] = itemField;
+					// replace original value with markup value in field
+					suggestion[fieldName] = suggestion[fieldName].replace(originalValue, markupReplacementValue)
 				}
 			});
 		});
 	});
 
-	return result;
+	return suggestions;
+}
+
+const isItemsProperty = (fieldName, highlighPath) => {
+	return fieldName === 'items' && highlighPath === fieldName;
 }

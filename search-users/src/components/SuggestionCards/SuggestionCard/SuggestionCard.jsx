@@ -37,26 +37,31 @@ const SuggestionCard = (props) => {
 			{/* user field markups */}
 			<UserProperty
 				propertyClass='id'
+				propertyName='id'
 				propertyValue={props.suggestion.id}
 			/>
 
 			<UserProperty
 				propertyClass='name'
+				propertyName='name'
 				propertyValue={props.suggestion.name}
 			/>
 
 			<UserProperty
 				propertyClass='item-search-text'
+				propertyName='itemSearch'
 				propertyValue={props.suggestion.itemSearch}
 			/>
 
 			<UserProperty
 				propertyClass='address'
+				propertyName='address'
 				propertyValue={props.suggestion.address}
 			/>
 
 			<UserProperty
 				propertyClass='pincode'
+				propertyName='pincode'
 				propertyValue={props.suggestion.pincode}
 			/>
 		</li>

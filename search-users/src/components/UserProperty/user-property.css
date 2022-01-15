@@ -11,19 +11,21 @@
   font-style: italic;
 }
 
-.suggestion-card .item-search-text {
-  display: list-item;
-  /* TODO */
-  /* margin-left: 1.4em; */
-  margin: 3px;
-  list-style-type: circle;
-  padding: 0.3rem 0.3rem 0.3rem 0;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+.item-search-text .item-search-text-list {
+  list-style-type: none;
+  font-size: 0.9rem;
+  line-height: 1rem;
+  border: 1px solid #808080;
+  border-width: 1px 0 1px 0;
+  padding: 5px;
+  margin: 5px 0;
 }
 
-.suggestion-card .item-search-text::marker {
+ul.item-search-text-list li::before {
+  content: "\2022"; /* \2022 is the CSS unicode for a bullet */
   color: #0e69df;
+  display: inline-block;
+  width: 1em;
 }
 
 .suggestion-card .address,
@@ -33,7 +35,7 @@
 
 .suggestion-card .id,
 .suggestion-card .name,
-.suggestion-card .item-search-text,
+.suggestion-card .item-search-text-list,
 .suggestion-card .address,
 .suggestion-card .pincode {
   padding: 3px;
