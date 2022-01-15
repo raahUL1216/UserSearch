@@ -1,22 +1,4 @@
-import { Constants } from "../constants/Constants";
 import { SearchText } from "../constants/SearchText";
-
-export const getUsers = async (searchTerm) => {
-	const searchAPIURI = `${Constants.searchAPI}search-users/?searchTerm=${searchTerm}`,
-		headers = Constants.headers;
-
-	console.log(searchAPIURI);
-
-	if (searchTerm) {
-		await fetch(searchAPIURI, { headers })
-			.then(res => res.json())
-			.then(
-				(result) => prepareUserSearchMarkup(result),
-				(error) => {
-					console.log(error);
-				});
-	}
-}
 
 export const prepareUserSearchMarkup = (suggestions) => {
 	suggestions?.forEach(suggestion => {

@@ -14,7 +14,7 @@ function App() {
 		<Router>
 			<Switch>
 				{/* user search results page */}
-				<Route path="/searches">
+				<Route path="/searches/:searchText">
 					<ShowUserSearches />
 				</Route>
 

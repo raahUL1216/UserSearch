@@ -8,6 +8,7 @@ import './search-input.css'
 const SearchInput = (props) => {
 	const history = useHistory();
 
+	// when enter key is pressed on search icon or clicked, redirect to show user search page
 	const showSuggestions = (event, isKeyboardEvent) => {
 		if (isKeyboardEvent) {
 			const keyPressed = event.which || event.keyCode || 0;
@@ -20,22 +21,17 @@ const SearchInput = (props) => {
 		}
 	}
 
-	const showUserSearchesPage = async (event, isKeyboardEvent) => {
+	// when enter key is pressed in input, redirect to show user search page
+	const showUserSearchesPage = (event, isKeyboardEvent) => {
 		const keyPressed = event.which || event.keyCode || 0;
 
 		if (props.searchText) {
 			if (isKeyboardEvent) {
 				if (keyPressed === EventKeyCode.Enter) {
-					history.push({
-						pathname: '/searches',
-						state: props.searchText
-					});
+					history.push(`/searches/${props.searchText}`);
 				}
 			} else {
-				history.push({
-					pathname: '/searches',
-					state: props.searchText
-				});
+				history.push(`/searches/${props.searchText}`);
 			}
 		}
 	}

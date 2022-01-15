@@ -1,19 +1,27 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useLocation } from "react-router-dom";
-import './show-user-searches.css';
+import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import { Constants } from '../../constants/Constants';
 import { prepareUserSearchMarkup } from '../../common/UserSearchMarkup';
 import UserProperty from '../../components/UserProperty/UserProperty';
+import './show-user-searches.css';
 
 const ShowUserSearches = () => {
-	const location = useLocation();
+	// get search text from url params/
+	const { searchText } = useParams();
 	const [searchSuggestions, setSearchSuggestions] = useState([]);
 
-	const getUsers = useCallback(async (searchTerm) => {
-		const searchAPIURI = `${Constants.searchAPI}search-users/?searchTerm=${searchTerm}`,
+	useEffect(() => {
+		// flag to unsubscibe fetch users API
+		let isSubscribed = true;
+
+		if (!searchText) {
+			setSearchSuggestions([]);
+		}
+
+		const searchAPIURI = `${Constants.searchAPI}search-users/?searchTerm=${searchText}`,
 			headers = Constants.headers;
 
-		if (searchTerm) {
+		const fetchUsers = async () => {
 			await fetch(searchAPIURI, { headers })
 				.then(res => res.json())
 				.then(
@@ -21,31 +29,24 @@ const ShowUserSearches = () => {
 						result = prepareUserSearchMarkup(result);
 
 						// update the prepared markup
-						if (result.length > 0) {
+						if (result.length > 0 && isSubscribed) {
 							setSearchSuggestions(result);
 						}
 					},
 					(error) => {
 						console.log(error);
 					});
-		} else {
-			// when input is empty, remove suggestions
-			setSearchSuggestions([]);
 		}
-	}, []);
 
-	useEffect(() => {
-		// let isCanceled = false;
-		const searchTerm = location.state;
+		if (searchText) {
+			fetchUsers(searchText);
+		}
 
-		getUsers(searchTerm);
-		// return {
-		// 	promise: users,
-		// 	cancel() {
-		// 		isCanceled = true;
-		// 	},
-		// };
-	}, [location.state, getUsers]);
+		// cancel subscription to fetchUsers API
+		return () => {
+			isSubscribed = false;
+		}
+	}, [searchText]);
 
 	return (
 		<div className='show-search-results-container'>
