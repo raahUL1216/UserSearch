@@ -52,6 +52,28 @@ export const userSearchResponse = [
 	}
 ]
 
+export const suggestionCards = [
+	{
+		"id": "323-s2-112",
+		"name": "John Michael",
+		"items": [
+			"Refrigerator"
+		],
+		"address": "1st Cross, 9th Main, abc Apartement",
+		"pincode": "5xx012",
+	},
+	{
+		"id": "123-s2-546",
+		"name": "John Jacobs",
+		"items": [
+			"bucket",
+			"bottle"
+		],
+		"address": "1st Cross, 9th Main, abc Apartment",
+		"pincode": "5xx012",
+	}
+]
+
 export const userProperty = {
 	name: 'id',
 	value: '323-s2-112'

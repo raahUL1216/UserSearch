@@ -9,7 +9,7 @@ const ShowUserPage = () => {
 
 	useEffect(() => {
 		let user = location.state;
-		delete user['itemSearch'];
+		delete user['item_search'];
 
 		setUser(user);
 	}, [location]);

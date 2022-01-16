@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import SuggestionCards from '../SuggestionCards';
-import { userSearchResponse } from '../../../testing/mock_responses/mockResponses';
+import { suggestionCards } from '../../../testing/mock_responses/mockResponses';
 import { focusElement, mouseOverElement } from '../../../testing/CommonTestFunctions';
 
 const searchText = 'john';
@@ -22,7 +22,7 @@ describe('Suggestion cards', () => {
 			render(
 				<SuggestionCards
 					searchText={searchText}
-					searchSuggestions={userSearchResponse}
+					searchSuggestions={suggestionCards}
 				/>
 			);
 
@@ -35,7 +35,7 @@ describe('Suggestion cards', () => {
 			render(
 				<SuggestionCards
 					searchText={searchText}
-					searchSuggestions={userSearchResponse}
+					searchSuggestions={suggestionCards}
 				/>
 			);
 
@@ -51,7 +51,7 @@ describe('Suggestion cards', () => {
 			render(
 				<SuggestionCards
 					searchText={searchText}
-					searchSuggestions={userSearchResponse}
+					searchSuggestions={suggestionCards}
 				/>
 			);
 

@@ -11,10 +11,10 @@ const UserProperty = (props) => {
 				<div className={props.propertyClass}
 					onMouseOver={(event) => { event.stopPropagation(); }}>
 					{
-						/* if property is itemSearch, 
+						/* if property is item_search, 
 						then display the item search text in list, 
 						else display the property value */
-						props?.propertyName !== 'itemSearch'
+						props?.propertyName !== 'item_search'
 							? Parser(props.propertyValue)
 							: <ul className='item-search-text-list'>
 								<li>

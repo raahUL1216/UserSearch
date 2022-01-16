@@ -29,7 +29,7 @@ const ShowUserSearchesPage = () => {
 						result = prepareUserSearchMarkup(result);
 
 						result = result.map((user) => {
-							delete user['itemSearch'];
+							delete user['item_search'];
 							delete user['highlights'];
 
 							return user;
