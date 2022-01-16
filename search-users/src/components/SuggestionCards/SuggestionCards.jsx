@@ -1,5 +1,5 @@
 import React from 'react'
-import SuggestionCard from './SuggestionCard/SuggestionCard'
+import SuggestionCard from '../SuggestionCard/SuggestionCard'
 import './suggestion-cards.css'
 
 const SuggestionCards = (props) => {
@@ -31,7 +31,7 @@ const SuggestionCards = (props) => {
 	return (
 		<React.Fragment>
 			{
-				props.searchSuggestions.length > 0 &&
+				props.searchText.length > 0 &&
 
 				<ul id='userSearchResults'
 					className={"suggestion-container " + (userNotFound() ? "no-user" : "")}

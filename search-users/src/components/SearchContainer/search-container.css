@@ -1,0 +1,9 @@
+.search-container {
+  width: min(90vw, 400px);
+}
+
+@media only screen and (min-width: 600px) {
+  .search-container {
+    margin: 1rem;
+  }
+}

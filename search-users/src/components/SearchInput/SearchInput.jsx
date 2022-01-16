@@ -1,32 +1,19 @@
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { EventKeyCode } from '../../constants/EventKeyCodes'
-import { FaSearch } from "react-icons/fa";
-import { RiCloseLine } from 'react-icons/ri'
-import './search-input.css'
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
+import { EventKeyCode } from '../../constants/EventKeyCodes';
+import { RiCloseLine } from 'react-icons/ri';
+import './search-input.css';
 
 const SearchInput = (props) => {
 	const history = useHistory();
 
-	// when enter key is pressed on search icon or clicked, redirect to show user search page
-	const showSuggestions = (event, isKeyboardEvent) => {
-		if (isKeyboardEvent) {
-			const keyPressed = event.which || event.keyCode || 0;
-
-			if (keyPressed === EventKeyCode.Enter) {
-				showUserSearchesPage(event);
-			}
-		} else {
-			showUserSearchesPage(event, isKeyboardEvent);
-		}
-	}
-
-	// when enter key is pressed in input, redirect to show user search page
-	const showUserSearchesPage = (event, isKeyboardEvent) => {
-		const keyPressed = event.which || event.keyCode || 0;
-
+	// redirect to show user search page
+	const showUserSearchesPage = (event) => {
 		if (props.searchText) {
-			if (isKeyboardEvent) {
+			if (event.type === 'keydown') {
+				const keyPressed = event.which || event.keyCode || 0;
+
 				if (keyPressed === EventKeyCode.Enter) {
 					history.push(`/searches/${props.searchText}`);
 				}
@@ -36,12 +23,26 @@ const SearchInput = (props) => {
 		}
 	}
 
+	const clearUserSearch = (event) => {
+		if (event.type === 'keydown') {
+			const keyPressed = event.which || event.keyCode || 0;
+
+			if (keyPressed === EventKeyCode.Enter) {
+				props.setSearchText('');
+				props.setSearchSuggestions([]);
+			}
+		} else {
+			props.setSearchText('');
+			props.setSearchSuggestions([]);
+		}
+	}
+
 	return (
 		<div className='search-input-wrapper'>
 			<FaSearch className='search-input-icon'
 				tabIndex={0}
-				onClick={(event) => showSuggestions(event, false)}
-				onKeyDown={(event) => showSuggestions(event, true)}
+				onClick={showUserSearchesPage}
+				onKeyDown={showUserSearchesPage}
 				data-testid='search-input-icon'
 			/>
 
@@ -49,17 +50,17 @@ const SearchInput = (props) => {
 				className='search-input'
 				placeholder="Search users by ID, address, name, items."
 				value={props.searchText}
-				onChange={(event) => { props.startSearch(event.target.value) }}
-				onKeyDown={(event) => showUserSearchesPage(event, true)}
-				data-testid="search-input"
+				onChange={(event) => { props.searchUser(event.target.value) }}
+				onKeyDown={showUserSearchesPage}
+				data-testid='search-input'
 				name="searchText"
 				autoFocus
 			/>
 
 			<RiCloseLine className='clear-input-icon'
 				tabIndex={0}
-				onClick={(event) => props.clearSuggestions(event, false)}
-				onKeyDown={(event) => props.clearSuggestions(event, true)}
+				onClick={clearUserSearch}
+				onKeyDown={clearUserSearch}
 				data-testid='clear-input-icon'
 			/>
 		</div>
