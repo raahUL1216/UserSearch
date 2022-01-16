@@ -5,9 +5,6 @@ import UserProperty from '../UserProperty/UserProperty';
 import './suggestion-card.css';
 
 const SuggestionCard = (props) => {
-	console.log(props.suggestion);
-
-	console.log(Object.keys(props.suggestion));
 	const history = useHistory();
 
 	// show user on mouse click and when enter key is pressed on suggestion
@@ -38,24 +35,37 @@ const SuggestionCard = (props) => {
 			onMouseOver={(event) => { props.highlightSuggestion(event) }}
 			onFocus={(event) => { props.highlightSuggestion(event) }}
 			data-testid={'suggestion-' + props.index}>
-			{
-				/* display properties except items and highlights */
-				Object.keys(props.suggestion).map((property, index) => {
-					if (property !== 'items') {
-						return (
-							<UserProperty
-								key={'field-' + index}
-								propertyClass={property}
-								propertyName={property}
-								propertyValue={props.suggestion[property]} />
-						)
-					} else {
-						return (
-							<React.Fragment key={'field-' + index}></React.Fragment>
-						)
-					}
-				})
-			}
+
+			{/* user field markups  */}
+			<UserProperty
+				propertyClass='id'
+				propertyName='id'
+				propertyValue={props.suggestion.id}
+			/>
+
+			<UserProperty
+				propertyClass='name'
+				propertyName='name'
+				propertyValue={props.suggestion.name}
+			/>
+
+			<UserProperty
+				propertyClass='item-search-text'
+				propertyName='item_search'
+				propertyValue={props.suggestion.item_search}
+			/>
+
+			<UserProperty
+				propertyClass='address'
+				propertyName='address'
+				propertyValue={props.suggestion.address}
+			/>
+
+			<UserProperty
+				propertyClass='pincode'
+				propertyName='pincode'
+				propertyValue={props.suggestion.pincode}
+			/>
 		</li>
 	)
 }

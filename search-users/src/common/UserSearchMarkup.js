@@ -11,7 +11,7 @@ export const prepareUserSearchMarkup = (suggestions) => {
 				if (isItemsProperty(fieldName, highlight.path)) {
 					// if searchTerm is found in items array, then show it using markup
 					let itemObject = highlight.texts.find(text => text.type === SearchText.Found);
-					suggestion['itemSearch'] = itemObject ? `"${itemObject.value}" found in items.` : '';
+					suggestion['item_search'] = itemObject ? `"${itemObject.value}" found in items.` : '';
 				}
 				else if (highlight.path === fieldName) {
 					let texts = highlight.texts;

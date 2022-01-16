@@ -4,11 +4,11 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import SuggestionCard from '../SuggestionCard';
 import ShowUserPage from '../../../pages/ShowUserPage/ShowUserPage';
-import { userSearchResponse } from '../../../testing/mock_responses/mockResponses';
+import { suggestionCards } from '../../../testing/mock_responses/mockResponses';
 import { clickOn, focusElement, pressEnterOn } from '../../../testing/CommonTestFunctions';
 
 const index = 0;
-const suggestion = userSearchResponse ? userSearchResponse[0] : [];
+const suggestion = suggestionCards ? suggestionCards[0] : [];
 const mockedHighlightSuggestion = jest.fn();
 
 const MockSuggestionCardContainer = () => {
