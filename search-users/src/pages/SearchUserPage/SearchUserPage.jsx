@@ -1,10 +1,10 @@
 import React from 'react'
 import SearchContainer from '../../components/SearchContainer/SearchContainer'
 
-const SearchUser = () => {
+const SearchUserPage = () => {
 	return (
 		<SearchContainer />
 	)
 }
 
-export default SearchUser
+export default SearchUserPage

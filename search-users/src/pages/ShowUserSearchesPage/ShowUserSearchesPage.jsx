@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import { Constants } from '../../constants/Constants';
 import { prepareUserSearchMarkup } from '../../common/UserSearchMarkup';
 import UserProperty from '../../components/UserProperty/UserProperty';
-import './show-user-searches.css';
+import './show-user-searches-page.css';
 
-const ShowUserSearches = () => {
+const ShowUserSearchesPage = () => {
 	// get search text from url params/
 	const { searchText } = useParams();
 	const [searchSuggestions, setSearchSuggestions] = useState([]);
@@ -28,7 +28,13 @@ const ShowUserSearches = () => {
 					(result) => {
 						result = prepareUserSearchMarkup(result);
 
-						// update the prepared markup
+						result = result.map((user) => {
+							delete user['itemSearch'];
+							delete user['highlights'];
+
+							return user;
+						})
+
 						if (result.length > 0 && isSubscribed) {
 							setSearchSuggestions(result);
 						}
@@ -51,55 +57,31 @@ const ShowUserSearches = () => {
 	return (
 		<div className='show-search-results-container'>
 			<h2 className='search-page-title'>User search result page</h2>
-			<ul className='user-suggestion-list'>
+			<ul className='user-suggestion-list'
+				data-testid='show-search-results'>
 				{
-					searchSuggestions?.map((suggestion) => {
+					/* iterate in suggestions */
+					searchSuggestions?.map((suggestion, suggestionIndex) => {
 						return (
-							<li key={suggestion.id}>
-								<div>
-									<span className='field-name'>UseId: </span>
-									<UserProperty
-										propertyClass='id'
-										propertyName='id'
-										propertyValue={suggestion.id}
-									/>
-								</div>
-
-								<div>
-									<span className='field-name'>Name: </span>
-									<UserProperty
-										propertyClass='name'
-										propertyName='name'
-										propertyValue={suggestion.name}
-									/>
-								</div>
-
-								<div>
-									<span className='field-name'>Items: </span>
-									<UserProperty
-										propertyClass='items'
-										propertyName='items'
-										propertyValue={suggestion.items?.join(', ')}
-									/>
-								</div>
-
-								<div>
-									<span className='field-name'>Address: </span>
-									<UserProperty
-										propertyClass='address'
-										propertyName='address'
-										propertyValue={suggestion.address}
-									/>
-								</div>
-
-								<div>
-									<span className='field-name'>Pincode: </span>
-									<UserProperty
-										propertyClass='pincode'
-										propertyName='pincode'
-										propertyValue={suggestion.pincode}
-									/>
-								</div>
+							<li key={'suggestion-item-' + suggestion.id}
+								data-testid={'suggestion-' + suggestionIndex}
+							>
+								{
+									/* display every property */
+									Object.keys(suggestion).map((property, index) => {
+										return (
+											<div key={'field-' + index}>
+												<span className='field-name'> {property + ': '} </span>
+												<UserProperty
+													propertyClass={property}
+													propertyName={property}
+													propertyValue={
+														property !== 'items' ? suggestion[property] : suggestion[property].join(', ')
+													} />
+											</div>
+										)
+									})
+								}
 							</li>
 						)
 					})
@@ -109,4 +91,4 @@ const ShowUserSearches = () => {
 	);
 }
 
-export default ShowUserSearches;
+export default ShowUserSearchesPage;

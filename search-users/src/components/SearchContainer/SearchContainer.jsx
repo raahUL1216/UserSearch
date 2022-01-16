@@ -2,15 +2,13 @@ import React, { useState, useCallback, useEffect, useRef } from 'react'
 import SearchInput from '../SearchInput/SearchInput'
 import SuggestionCards from '../SuggestionCards/SuggestionCards'
 import { Constants } from '../../constants/Constants'
-import { EventKeyCode } from '../../constants/EventKeyCodes'
-import '../../styles/user-search-styles.css'
 import { prepareUserSearchMarkup } from '../../common/UserSearchMarkup'
+import './search-container.css'
 
 const SearchContainer = () => {
-	// variable to unsubscribe getUsers
+	// variable to unsubscribe getUsers API
 	let getUsersSubscription = useRef(true);
 
-	// state for input search term and user search suggestions
 	const [searchText, setSearchText] = useState('');
 	const [searchSuggestions, setSearchSuggestions] = useState([]);
 
@@ -37,7 +35,8 @@ const SearchContainer = () => {
 					(result) => {
 						result = prepareUserSearchMarkup(result);
 
-						if (result.length > 0 && getUsersSubscription.current) {
+						// set suggestions only if component is not unmounted
+						if (getUsersSubscription.current) {
 							setSearchSuggestions(result);
 						}
 					},
@@ -48,13 +47,10 @@ const SearchContainer = () => {
 		}
 	}
 
-	const startUserSearch = function (fn) {
+	const debounceSearch = function (fn) {
 		let timer;
 
-		return function () {
-			let context = this,
-				args = arguments;
-
+		return function (...args) {
 			// store search text & 
 			// avoid calling API(by clearing timer) if next keypress was registered before 300ms(Constants.searchDelay)
 			setSearchText(args[0]);
@@ -62,35 +58,22 @@ const SearchContainer = () => {
 
 			timer = setTimeout(() => {
 				// call API to search user as delay between subsequent keypress is more than 300ms
-				fn.apply(context, args);
+				fn.apply(this, args);
 			}, Constants.searchDelay);
 		};
 	}
 
+	// debounce search 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const debounceSearch = useCallback(startUserSearch(getUsers), []);
-
-	const clearSuggestions = (event, isKeyboardEvent) => {
-		if (isKeyboardEvent) {
-			const keyPressed = event.which || event.keyCode || 0;
-
-			if (keyPressed === EventKeyCode.Enter) {
-				setSearchText('');
-				setSearchSuggestions([]);
-			}
-		} else {
-			setSearchText('');
-			setSearchSuggestions([]);
-		}
-	}
+	const searchUser = useCallback(debounceSearch(getUsers), []);
 
 	return (
 		<div className='search-container'>
 			<SearchInput
 				searchText={searchText}
-				startSearch={debounceSearch}
+				searchUser={searchUser}
+				setSearchText={setSearchText}
 				setSearchSuggestions={setSearchSuggestions}
-				clearSuggestions={clearSuggestions}
 			/>
 
 			<SuggestionCards

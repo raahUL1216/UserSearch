@@ -1,5 +1,5 @@
 import React from 'react'
-import SuggestionCard from './SuggestionCard/SuggestionCard'
+import SuggestionCard from '../SuggestionCard/SuggestionCard'
 import './suggestion-cards.css'
 
 const SuggestionCards = (props) => {
@@ -31,18 +31,22 @@ const SuggestionCards = (props) => {
 	return (
 		<React.Fragment>
 			{
-				props.searchSuggestions.length > 0 &&
+				props.searchText.length > 0 &&
 
-				<ul id='userSearchResults' className={"suggestion-container " + (userNotFound() ? "no-user" : "")}>
+				<ul id='userSearchResults'
+					className={"suggestion-container " + (userNotFound() ? "no-user" : "")}
+					data-testid='suggestion-list'
+				>
 					{
 						userNotFound()
 							? <li>No user found</li>
-							: props.searchSuggestions.map((suggestion) => {
+							: props.searchSuggestions.map((suggestion, index) => {
 								return (
 									<SuggestionCard
 										key={suggestion.id}
 										suggestion={suggestion}
 										highlightSuggestion={highlightSuggestion}
+										index={index}
 									/>
 								)
 							})
