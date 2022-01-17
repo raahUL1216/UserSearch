@@ -14,6 +14,9 @@ Frontend:
 Backend: 
 > *cd UserSearch/search-users-api && npm i && node app.js*
 
+Test App:
+> *cd UserSearch && npm test*
+
 You will need to change the following things,
 - mongodb connection string in backend
 - portNumber to host front end or backend
@@ -24,16 +27,16 @@ Once you start the development servers, you would see app running on http://loca
 Sample screenshots of the App,
 
 1) Search Input <br />
-![0](https://user-images.githubusercontent.com/34180124/148698368-569f9c56-14e9-46f8-92f8-d806e4725911.png)
+![0](https://user-images.githubusercontent.com/34180124/149747351-29d21af6-e9a4-42d7-bf20-a26928deb4ae.png)
 
-2) Full text search (found word highlighted in user name field) <br />
-![1](https://user-images.githubusercontent.com/34180124/148698512-dcc8159b-5f24-4f0e-a8cd-0dd24259ec34.png)
+2) Full text search (found word is highlighted in user items array) <br />
+![1](https://user-images.githubusercontent.com/34180124/149747263-b2d0779e-7658-4648-9677-5dfd3263a5e1.png)
 
 3) User not found message <br />
 ![2](https://user-images.githubusercontent.com/34180124/148698542-cf0629e4-163d-432e-8ffa-36edc71cf516.png)
 
 4) User search result page <br />
-![4](https://user-images.githubusercontent.com/34180124/148698550-17856630-aef7-43c4-872a-85a02874823a.png)
+![4](https://user-images.githubusercontent.com/34180124/149747925-35c2a386-ac93-4ec1-bf21-22e77a37f7fd.png)
 
 5) User search suggestions page <br />
 ![5](https://user-images.githubusercontent.com/34180124/148698552-680293dc-e150-4e24-99bf-e3bf6d50bc78.png)
